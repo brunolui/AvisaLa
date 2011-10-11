@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayoutPerimetro"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent">
+	
+    <RadioGroup android:id="@+id/radioGroupPerimetro" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    
+    <TextView android:text="Escolha a distância até o destino em que o alarme deve ser disparado." 
+    android:layout_height="wrap_content"
+    android:id="@+id/textPerimetro" 
+    android:layout_width="wrap_content">
+    </TextView>
+        
+    <RadioButton android:text="1 km" 
+    android:id="@+id/perimetro1" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+                
+    <RadioButton android:text="2 km" 
+    android:id="@+id/perimetro2" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+        
+    <RadioButton android:text="5 km" 
+    android:id="@+id/perimetro5" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+        
+    <RadioButton android:text="10 km" 
+    android:id="@+id/perimetro10" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+        
+    <Button android:id="@+id/btPerimetro" 
+    android:text="Salvar" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </Button>
+        
+    </RadioGroup>
+		
+</LinearLayout>

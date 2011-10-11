@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content">
+    
+    <LinearLayout android:id="@+id/linearLayoutAlarme"
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content">
+
+    <RadioGroup android:id="@+id/radioGroupAlarme" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    
+    <TextView android:text="Alarme" 
+    android:layout_height="wrap_content"
+    android:id="@+id/textAlarme" 
+    android:layout_width="wrap_content">
+    </TextView>
+        
+    <RadioButton android:text="Vibra" 
+    android:id="@+id/vibra" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+        
+    <RadioButton android:text="Toque 1" 
+    android:id="@+id/alarme1" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+                
+    <RadioButton android:text="Toque 2" 
+    android:id="@+id/alarme2" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+        
+    <RadioButton android:text="Toque 3" 
+    android:id="@+id/alarme3" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+        
+    <RadioButton android:text="Toque 4" 
+    android:id="@+id/alarme4" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+        
+    <RadioButton android:text="Toque 5" 
+    android:id="@+id/alarme5" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+        
+    <RadioButton android:text="Toque 6" 
+    android:id="@+id/alarme6" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+        
+    <RadioButton android:text="Toque 7" 
+    android:id="@+id/alarme7" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+        
+    <RadioButton android:text="Toque 8" 
+    android:id="@+id/alarme8" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+        
+    <RadioButton android:text="Toque 9" 
+    android:id="@+id/alarme9" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+        
+    <RadioButton android:text="Toque 10" 
+    android:id="@+id/alarme10" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </RadioButton>
+        
+    <Button android:id="@+id/btAlarme" 
+    android:text="Salvar" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+    </Button>
+        
+    </RadioGroup>
+    
+  </LinearLayout>
+  
+</ScrollView>

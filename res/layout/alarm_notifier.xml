@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/main" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent" android:weightSum="1">
+	
+	<TextView android:text="Você chegou ao seu destino: " android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="0.37"/>
+	<TextView android:id="@+id/endereco" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+	
+
+	<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<Button android:id="@+id/btDesligarAlarme" android:text="Desligar alarme" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="150px"/>
+	</LinearLayout>
+	
+</LinearLayout>
