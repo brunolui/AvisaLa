@@ -24,6 +24,7 @@ public class RotaDestino extends MapActivity {
 
 	public static final int ACTUAL_LOCATION_REQUEST = 0;
 	MapView mapa;
+	Rota route;
 	Rota rota;
 	private String urlToMapWebservice;
 	
@@ -34,32 +35,41 @@ public class RotaDestino extends MapActivity {
         mapa = (MapView) findViewById(R.id.mapa);
         mapa.setBuiltInZoomControls(true);
         
-        getActualPosition();
-	}
-	
-	private void getActualPosition() {
-		startActivityForResult(new Intent(this,android.avisala.gps.AndroidLocation.class), ACTUAL_LOCATION_REQUEST);
-	}
-	
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ACTUAL_LOCATION_REQUEST && resultCode == RESULT_OK) {
-        	double myLatitude = data.getExtras().getDouble("myLatitude");
-            double myLongitude = data.getExtras().getDouble("myLongitude");
-            
-            buildUrlToMapWebservice(myLatitude, myLongitude);
-            startThread();
-        }
-    }
+        rota = getRota();
 
-	private void buildUrlToMapWebservice(double myLatitude, double myLongitude) {
-		Rota rota = getRota();
-		
+        buildUrlToMapWebservice();
+	}
+
+	private Rota getRota() {
+		Bundle extras = getIntent().getExtras(); 
+		if(extras != null) {
+			Rota rota = new Rota();
+			rota.setLatitudeOrigem(extras.getDouble("latitudeOrigem"));
+			rota.setLongitudeOrigem(extras.getDouble("longitudeOrigem"));
+			rota.setLatitudeDestino(extras.getDouble("latitudeDestino"));
+			rota.setLongitudeDestino(extras.getDouble("longitudeDestino"));
+			return rota;
+		}
+		return null;
+	}
+	
+	private void buildUrlToMapWebservice() {
+		if (rota.naoPossuiCoordenadasDeOrigem()) {
+			getActualPosition();
+			
+		} else {
+			this.buildUrl();
+			this.startThread();
+		}
+	}
+
+	private void buildUrl() {
 		StringBuffer url = new StringBuffer();
         url.append("http://maps.google.com/maps?f=d&hl=en");
         url.append("&saddr=");// from
-        url.append(Double.toString(myLatitude));
+        url.append(Double.toString(rota.getLatitudeOrigem()));
         url.append(",");
-        url.append(Double.toString(myLongitude));
+        url.append(Double.toString(rota.getLongitudeOrigem()));
         url.append("&daddr=");// to
         url.append(Double.toString(rota.getLatitudeDestino()));
         url.append(",");
@@ -68,24 +78,26 @@ public class RotaDestino extends MapActivity {
 		urlToMapWebservice = url.toString();
 	}
 
-	private Rota getRota() {
-		Bundle extras = getIntent().getExtras(); 
-		if(extras != null) {
-			Rota rota = new Rota();
-			rota.setLatitudeDestino(extras.getDouble("latitudeDestino"));
-			rota.setLongitudeDestino(extras.getDouble("longitudeDestino"));
-			return rota;
-		}
-		return null;
+	private void getActualPosition() {
+		startActivityForResult(new Intent(this,android.avisala.gps.AndroidLocation.class), ACTUAL_LOCATION_REQUEST);
 	}
 	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ACTUAL_LOCATION_REQUEST && resultCode == RESULT_OK) {
+        	rota.setLatitudeOrigem(data.getExtras().getDouble("myLatitude"));
+			rota.setLongitudeOrigem(data.getExtras().getDouble("myLongitude"));
+            
+            this.buildUrl();
+            this.startThread();
+        }
+    }
 	
 	private void startThread() {
 		new Thread() {
             @Override
             public void run() {
                 InputStream inputStream = getConnection(urlToMapWebservice);
-                rota = RoadProvider.getRoute(inputStream);
+                route = RoadProvider.getRoute(inputStream);
                 mHandler.sendEmptyMessage(0);
             }
         }.start();		
@@ -94,9 +106,9 @@ public class RotaDestino extends MapActivity {
 	Handler mHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
         	TextView textView = (TextView) findViewById(R.id.descricao);
-            textView.setText(rota.nome + "\n" + rota.descricao);
+            textView.setText(route.nome + "\n" + route.descricao);
             
-            MapOverlay mapOverlay = new MapOverlay(rota, mapa);
+            MapOverlay mapOverlay = new MapOverlay(route, mapa);
             List<Overlay> listOfOverlays = mapa.getOverlays();
             listOfOverlays.clear();
             listOfOverlays.add(mapOverlay);
@@ -121,4 +133,5 @@ public class RotaDestino extends MapActivity {
 	protected boolean isRouteDisplayed() {
 		return false;
 	}
+	
 }

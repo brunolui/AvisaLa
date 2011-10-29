@@ -89,8 +89,6 @@ public class MenuDestino extends ListActivity {
 
 	protected void criarRotaAteDestino() {
 		Intent intent = new Intent(this, android.avisala.destino.RotaDestino.class);
-		intent.putExtra("latitudeOrigem", -23.565029);
-		intent.putExtra("longitudeOrigem", -46.651953);
 		intent.putExtra("latitudeDestino", destino.getLatitude());
 		intent.putExtra("longitudeDestino", destino.getLongitude());
 		startActivity(intent);		

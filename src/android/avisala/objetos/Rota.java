@@ -48,4 +48,8 @@ public class Rota {
 		this.longitudeDestino = longitudeDestino;
 	}
 
+	public boolean naoPossuiCoordenadasDeOrigem() {
+		return latitudeOrigem == 0 && longitudeOrigem == 0;
+	}
+
 }

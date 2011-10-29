@@ -14,6 +14,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -34,9 +35,9 @@ public class LocationReceiver extends BroadcastReceiver {
 		longitudeDestino = bundle.getDouble("longitudeDestino");
 		distanciaMinimaParaAlertar = bundle.getInt("distanciaMinima");
 		
-		Location localizacaoAtual = (Location) bundle.get(LocationPoller.EXTRA_LOCATION);
+		Location localizacaoAtual = (Location) bundle.get(LocationManager.KEY_LOCATION_CHANGED);
+		
 		String menssage;
-
 		if (localizacaoAtual == null) {
 			localizacaoAtual = (Location) bundle.get(LocationPoller.EXTRA_LASTKNOWN);
 
@@ -55,6 +56,7 @@ public class LocationReceiver extends BroadcastReceiver {
 			if (distancia <= distanciaMinimaParaAlertar) {
 				this.dispararAlarme(context);			
 			} else {
+				this.mostrarRota(context, localizacaoAtual);
 				this.notificar(context, distancia);
 			}
 		}
@@ -77,8 +79,8 @@ public class LocationReceiver extends BroadcastReceiver {
 		
 		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		
-		Notification notification = new Notification(R.drawable.balao, notificacao, System.currentTimeMillis());
-		notification.setLatestEventInfo(context, "AvisaLá - Sua Posição atual", notificacao, contentIntent);
+		Notification notification = new Notification(R.drawable.avisala, notificacao, System.currentTimeMillis());
+		notification.setLatestEventInfo(context, "AvisaLá", notificacao, contentIntent);
 		notificationManager.notify(NOTIFICATION_ID, notification);
 	}
 
@@ -87,6 +89,19 @@ public class LocationReceiver extends BroadcastReceiver {
 		intent.putExtra("latitudeDestino", latitudeDestino);
 		intent.putExtra("longitudeDestino", longitudeDestino);
 		return PendingIntent.getActivity(context, 0, intent, 0);
+	}
+	
+	private void mostrarRota(Context context, Location localizacaoAtual) {
+		Intent intent = new Intent(context, RotaDestino.class);
+		intent.putExtra("latitudeOrigem", localizacaoAtual.getLatitude());
+		intent.putExtra("longitudeOrigem", localizacaoAtual.getLongitude());
+		intent.putExtra("latitudeDestino", latitudeDestino);
+		intent.putExtra("longitudeDestino", longitudeDestino);
+		
+		intent.addFlags(Intent.FLAG_FROM_BACKGROUND);
+		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); 
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);		
 	}
 
 	private void dispararAlarme(Context context) {
