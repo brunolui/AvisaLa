@@ -1,6 +1,7 @@
 package android.avisala.alarm;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -32,11 +33,11 @@ public class AlarmNotifier extends Activity {
 		setContentView(R.layout.alarm_notifier);
 
 		findViewById(R.id.btDesligarAlarme).setOnClickListener(
-				new View.OnClickListener() {
-					public void onClick(View v) {
-						terminar();
-					}
-				});
+		new View.OnClickListener() {
+			public void onClick(View v) {
+				terminar();
+			}
+		});
 
 		mostrarEnderecoFinal();
 
@@ -76,7 +77,10 @@ public class AlarmNotifier extends Activity {
 		Address address = null;
 		try {
 			Geocoder geocoder = new Geocoder(this, new Locale("pt", "BR"));
-			address = geocoder.getFromLocation(latitude, longitude, 1).get(0);
+			List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+			if (addresses.size() > 0) { 
+				address = addresses.get(0);
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -88,7 +92,7 @@ public class AlarmNotifier extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		this.stopAll();
-		
+
 		startActivity(new Intent(getApplicationContext(), MenuAvisaLa.class));
 	}
 
@@ -119,5 +123,7 @@ public class AlarmNotifier extends Activity {
 
 		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 		locationManager.removeUpdates(pendingIntentToStop);
+		
+		this.stopService(intentToStop);
 	}
 }

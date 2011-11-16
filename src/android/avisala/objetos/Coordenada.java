@@ -46,12 +46,12 @@ public class Coordenada extends GeoPoint {
 		this(location.getLatitude(), location.getLongitude());
 	}
 
-	// Cria baseado em um endereço
+	// Cria baseado em um endereï¿½o
 	public Coordenada(Address endereco) {
 		this(endereco.getLatitude(), endereco.getLongitude());
 	}
 
-	// Cria baseado em um endereço
+	// Cria baseado em um endereï¿½o
 	public Coordenada(Endereco endereco) {
 		this(endereco.getLatitude(), endereco.getLongitude());
 	}
@@ -126,5 +126,9 @@ public class Coordenada extends GeoPoint {
 		Address eOrigem = endereco.get(0);
 		Coordenada c = new Coordenada(eOrigem);
 		return c;
+	}
+	
+	public boolean isInicial() {
+		return false;
 	}
 }

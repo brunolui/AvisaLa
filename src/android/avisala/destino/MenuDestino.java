@@ -54,7 +54,7 @@ public class MenuDestino extends ListActivity {
 	}
 	
 	private void gerarMenuModal() {
-		CharSequence[] opcoesDestino = new CharSequence[] {"Ir até este destino", "Calcular rota até este destino", "Ativar alarme", "Remover este destino" };
+		CharSequence[] opcoesDestino = new CharSequence[] {"Visualizar destino", "Calcular rota", "Ativar alarme", "Remover destino" };
 
 		AlertDialog dialog = new AlertDialog.Builder(this).setTitle("Destino")
 		.setItems(opcoesDestino, new DialogInterface.OnClickListener() {
@@ -103,8 +103,16 @@ public class MenuDestino extends ListActivity {
 	}
 
 	protected void removerDestino() {
-		dataHelper.delete(destino.getId());
-		reloadDestinos();
+		 new AlertDialog.Builder(this)
+        .setMessage("Deseja remover este destino?")
+        .setNegativeButton("Não", null)
+        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+        	@Override
+            public void onClick(DialogInterface dialog, int which) {
+        		dataHelper.delete(destino.getId());
+        		reloadDestinos();    
+            }
+        }).show();
 	}
 	
 	protected void reloadDestinos() {

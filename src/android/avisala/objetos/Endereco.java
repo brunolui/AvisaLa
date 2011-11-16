@@ -47,11 +47,18 @@ public class Endereco {
 	}
 
 	public String getRua() {
-		return address.getFeatureName();
+		if (address.getThoroughfare() != null && address.getThoroughfare() != "") {
+			return address.getThoroughfare();			
+		} else {
+			return address.getFeatureName();
+		}
 	}
 
 	public String getEnderecoCompleto() {
-		return getRua() + ", " + getCidade() + " - " + getEstado();
+		if (getRua() != null && getCidade() != null && getEstado() != null) {
+			return getRua() + ", " + getCidade() + " - " + getEstado();
+		}
+		return "";
 	}
 
 	public double getLatitude() {

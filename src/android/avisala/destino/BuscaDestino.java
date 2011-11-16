@@ -11,6 +11,7 @@ import android.avisala.objetos.Endereco;
 import android.avisala.overlay.PointOverlay;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -34,22 +35,33 @@ public class BuscaDestino extends MapActivity implements OnClickListener {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		setContentView(R.layout.busca_destino);
-
-		final Button botaoBuscarEndereco = (Button) findViewById(R.id.btBuscarEndereco);
-		botaoBuscarEndereco.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	buscarEndereco();
-            }
-        });
 		
-		final Button botaoSalvarDestino = (Button) findViewById(R.id.btSalvarDestino);
-		botaoSalvarDestino.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	salvarEndereco();
-            }
-        });
-		
+		configurarBotoes();
 		configurarMapa();
+	}
+
+	private void configurarBotoes() {
+		final Button botaoBuscarEndereco = (Button) findViewById(R.id.btBuscarEndereco);
+		final Button botaoSalvarDestino = (Button) findViewById(R.id.btSalvarDestino);
+
+		if (getCoordenada().isInicial()) {
+		
+			botaoBuscarEndereco.setOnClickListener(new View.OnClickListener() {
+	            public void onClick(View v) {
+	            	buscarEndereco();
+	            }
+	        });
+			
+			botaoSalvarDestino.setOnClickListener(new View.OnClickListener() {
+	            public void onClick(View v) {
+	            	salvarEndereco();
+	            }
+	        });
+			
+		} else {
+			botaoBuscarEndereco.setVisibility(View.INVISIBLE);
+			botaoSalvarDestino.setVisibility(View.INVISIBLE);
+		}
 	}
 
 	private void configurarMapa() {
@@ -85,17 +97,36 @@ public class BuscaDestino extends MapActivity implements OnClickListener {
 	}
 
 	protected void salvarEndereco() {
-		
+		new AlertDialog.Builder(this)
+        .setMessage("Deseja salvar este destino?")
+        .setNegativeButton("Não", null)
+        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+        	@Override
+            public void onClick(DialogInterface dialog, int which) {
+        		salvar();    
+            }
+        }).show();
+	}
+	
+	protected void salvar() {
 		DataHelper dataHelper = new DataHelper(this);
 		EditText textEndereco = (EditText) findViewById(R.id.endereco);
 		String endereco = textEndereco.getText().toString();
 		dataHelper.insert(endereco, coordenadaAtual.getLatitude(), coordenadaAtual.getLongitude());
 		
 		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Salvar destino");
 		builder.setMessage("Destino salvo com sucesso");
-		builder.setPositiveButton("OK", null);
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        	@Override
+            public void onClick(DialogInterface dialog, int which) {
+        		voltar();    
+            }});
 		builder.show();
+	}
+		
+	protected void voltar() {
+		startActivity(new Intent(this, MenuDestino.class));
+		finish();
 	}
 
 	protected void buscarEndereco() {

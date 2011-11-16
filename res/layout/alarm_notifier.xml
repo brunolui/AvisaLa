@@ -3,12 +3,14 @@
 	android:id="@+id/main" android:orientation="vertical"
 	android:layout_width="fill_parent" android:layout_height="fill_parent" android:weightSum="1">
 	
-	<TextView android:text="Você chegou ao seu destino: " android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="0.37"/>
-	<TextView android:id="@+id/endereco" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
-	
+	<TextView android:layout_gravity="center" android:text="Você chegou ao seu destino" android:textSize="15sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
-	<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
-		<Button android:id="@+id/btDesligarAlarme" android:text="Desligar alarme" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="150px"/>
+	<ImageView android:layout_gravity="center" android:src="@drawable/flags" android:layout_width="216dp" android:layout_height="wrap_content"/>
+ 			
+	<TextView android:layout_gravity="center" android:id="@+id/endereco" android:layout_width="wrap_content" android:layout_height="58dp" android:textSize="18sp" android:textStyle="bold"/>
+
+	<LinearLayout android:layout_gravity="center" android:layout_width="220dp" android:layout_height="wrap_content">
+		<Button android:layout_gravity="center" android:id="@+id/btDesligarAlarme" android:text="Desligar alarme" android:layout_width="fill_parent" android:layout_height="fill_parent"/>
 	</LinearLayout>
 	
 </LinearLayout>

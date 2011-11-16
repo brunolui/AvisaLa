@@ -15,6 +15,8 @@ public class Rota {
 	private double latitudeDestino;
 	private double longitudeDestino;
 
+	public Rota() {
+	}
 	
 	public double getLatitudeOrigem() {
 		return latitudeOrigem;
@@ -52,4 +54,11 @@ public class Rota {
 		return latitudeOrigem == 0 && longitudeOrigem == 0;
 	}
 
+	public String getDescricaoFormatada() {
+		return descricao.replace("Distance", "Distância").replace("about", "aprox.");
+	}
+
+	public String getNomeDaRota() {
+		return nome.replace("to", "até");
+	}
 }

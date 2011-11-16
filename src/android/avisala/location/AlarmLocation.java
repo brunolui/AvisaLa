@@ -2,12 +2,15 @@ package android.avisala.location;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.avisala.MenuAvisaLa;
+import android.avisala.R;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 public class AlarmLocation extends Activity {
@@ -18,6 +21,15 @@ public class AlarmLocation extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.alarme);
+
+		findViewById(R.id.btDesligarAlarme).setOnClickListener(
+		new View.OnClickListener() {
+			public void onClick(View v) {
+				terminar();
+			}
+		});
+		
 		Intent receiverIntent = setExtrasParaOReceiver();
 		
 		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -56,5 +68,24 @@ public class AlarmLocation extends Activity {
 	public int getDistanciaMinimaParaDispararAlarme() {
 		SharedPreferences sharedPreferences = getSharedPreferences("perimetro", MODE_PRIVATE);
 		return sharedPreferences.getInt("distancia", 1000);
+	}
+	
+	private void terminar() {
+		this.finish();
+		
+		Intent intentToStop = new Intent(this, LocationReceiver.class);
+		
+		PendingIntent pendingIntentToStop = PendingIntent.getBroadcast(this, 222, intentToStop, 0);
+
+		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		locationManager.removeUpdates(pendingIntentToStop);
+		
+		this.stopService(intentToStop);
+		this.startActivity(new Intent(getApplicationContext(), MenuAvisaLa.class));
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 }

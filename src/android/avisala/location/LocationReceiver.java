@@ -56,7 +56,6 @@ public class LocationReceiver extends BroadcastReceiver {
 			if (distancia <= distanciaMinimaParaAlertar) {
 				this.dispararAlarme(context);			
 			} else {
-				this.mostrarRota(context, localizacaoAtual);
 				this.notificar(context, distancia);
 			}
 		}
@@ -65,8 +64,8 @@ public class LocationReceiver extends BroadcastReceiver {
 	private double calcularDistanciaAteDestino(Context context, Location localizacaoAtual) {
 		float[] resultado = new float[1];
 		Location.distanceBetween(localizacaoAtual.getLatitude(), localizacaoAtual.getLongitude(), latitudeDestino, longitudeDestino, resultado);
-		double distanciaEmKm = resultado[0] / 1000;
-		return distanciaEmKm;
+		double distanciaEmMetros = resultado[0];
+		return distanciaEmMetros;
 	}
 
 	private void notificar(Context context, double distancia) {
@@ -74,7 +73,7 @@ public class LocationReceiver extends BroadcastReceiver {
 		decimalFormat.setMinimumFractionDigits(3);
 		decimalFormat.setMaximumFractionDigits(3);
 		
-		String notificacao = "Distância até o destino: " + decimalFormat.format(distancia) + " Km";
+		String notificacao = "Distância até o destino: " + decimalFormat.format((distancia/1000)) + " Km";
 		PendingIntent contentIntent = prepararIntentDaNotificacao(context);
 		
 		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

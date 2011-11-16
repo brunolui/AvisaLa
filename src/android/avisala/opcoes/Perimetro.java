@@ -16,41 +16,47 @@ public class Perimetro extends Activity {
 
 	public static final String PERIMETRO = "perimetro";
 	private int distancia;
+	private RadioButton radioBt1;
+	private RadioButton radioBt2;
+	private RadioButton radioBt5;
+	private RadioButton radioBt10;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.perimetro);
 		final Button btSalvar = (Button) findViewById(R.id.btPerimetro);
-		final RadioButton radioBt1 = (RadioButton) findViewById(R.id.perimetro1);
-		final RadioButton radioBt2 = (RadioButton) findViewById(R.id.perimetro2);
-		final RadioButton radioBt5 = (RadioButton) findViewById(R.id.perimetro5);
-		final RadioButton radioBt10 = (RadioButton) findViewById(R.id.perimetro10);
+		radioBt1 = (RadioButton) findViewById(R.id.perimetro1);
+		radioBt2 = (RadioButton) findViewById(R.id.perimetro2);
+		radioBt5 = (RadioButton) findViewById(R.id.perimetro5);
+		radioBt10 = (RadioButton) findViewById(R.id.perimetro10);
+		
+		selecionarAtual();
 
 		radioBt1.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				distancia = 1;
+				distancia = 1000;
 			}
 		});
 
 		radioBt2.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				distancia = 2;
+				distancia = 2000;
 			}
 		});
 
 		radioBt5.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				distancia = 5;
+				distancia = 5000;
 			}
 		});
 
 		radioBt10.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				distancia = 10;
+				distancia = 10000;
 			}
 		});
 
@@ -65,6 +71,29 @@ public class Perimetro extends Activity {
 				mostrarMensagemDeSucesso();
 			}
 		});
+	}
+
+	private void selecionarAtual() {
+		
+		SharedPreferences sharedPreferences = getSharedPreferences("perimetro", MODE_PRIVATE);
+		int distanciaAtual = sharedPreferences.getInt("distancia", 1000);
+		
+		switch (distanciaAtual) {
+			case 1000:
+				radioBt1.setChecked(true);
+				break;
+			case 2000:
+				radioBt2.setChecked(true);
+				break;
+			case 5000:
+				radioBt5.setChecked(true);
+				break;
+			case 10000:
+				radioBt10.setChecked(true);
+				break;
+			default:
+				break;
+		}
 	}
 
 	protected void mostrarMensagemDeSucesso() {

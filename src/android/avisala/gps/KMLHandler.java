@@ -10,15 +10,19 @@ import android.avisala.objetos.Destino;
 import android.avisala.objetos.Rota;
 
 public class KMLHandler extends DefaultHandler {
-	Rota rota;
-	boolean isPlacemark;
-	boolean isRoute;
-	boolean isItemIcon;
+	private Rota rota;
+	private boolean isPlacemark;
+	private boolean isRoute;
+	private boolean isItemIcon;
 	private Stack mCurrentElement = new Stack();
 	private String mString;
 
 	public KMLHandler() {
 		rota = new Rota();
+	}
+	
+	public Rota getRota() {
+		return rota;
 	}
 
 	@SuppressWarnings("unchecked")

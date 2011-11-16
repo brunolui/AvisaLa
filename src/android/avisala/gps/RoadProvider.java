@@ -25,6 +25,6 @@ public class RoadProvider {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return handler.rota;
+        return handler.getRota();
 	}
 }

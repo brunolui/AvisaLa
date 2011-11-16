@@ -14,20 +14,19 @@ public class AndroidLocation extends Activity {
 	private LocationListener locationListener;
 	private String bestProvider;
 
-	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		locationListener = new LocationListenerImpl(getApplicationContext());
-	
+
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 		locationManager.removeUpdates(locationListener);
-		
+
 		bestProvider = locationManager.getBestProvider(createCriteria(), true);
-		locationManager.requestLocationUpdates(bestProvider, 0, 50, locationListener);
+		locationManager.requestLocationUpdates(bestProvider, 0, 50,	locationListener);
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -39,7 +38,7 @@ public class AndroidLocation extends Activity {
 		}
 		finish();
 	}
-	
+
 	/** Criteria to get the best location provider */
 	public static Criteria createCriteria() {
 		Criteria criteria = new Criteria();
